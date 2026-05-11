@@ -2,11 +2,12 @@
 @model IEnumerable<BusinessEvent>
 
 <h2>Business Events</h2>
-<table class="table">
+<table id="businessEventsTable" class="display">
     <thead>
         <tr>
             <th>Id</th>
             <th>Event Date</th>
+            <th>Entity Type</th>
             <th>Event Type</th>
             <th>Actor Id</th>
             <th>Entity Data </th>
@@ -18,6 +19,7 @@
             <tr>
                 <td>@item.EventId</td>
                 <td>@item.EventTimestamp</td>
+                <td>@item.EntityType</td>
                 <td>@item.EventType</td>
                 <td>@item.ActorId</td>
                 <td>@item.EntityData</td>
