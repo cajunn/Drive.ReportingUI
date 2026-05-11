@@ -1,15 +1,20 @@
 ﻿@using Drive.ReportingUI.Web.Data.Models
+@using Drive.ReportingUI.Web.Helpers
 @model IEnumerable<BusinessEvent>
 
 <h2>Business Events</h2>
 <table id="businessEventsTable" class="display">
     <thead>
         <tr>
-            <th>Id</th>
-            <th>Event Date</th>
+            <th></th>
+            <th>Event Id</th>
+            <th>Event Timestamp</th>
             <th>Entity Type</th>
             <th>Event Type</th>
+            <th>Version</th>
             <th>Actor Id</th>
+            <th>Actor Type</th>
+            <th>Correlation Id</th>
             <th>Entity Data </th>
         </tr>
     </thead>
@@ -17,12 +22,18 @@
         @foreach (var item in Model)
         {
             <tr>
+                <td class="dt-control"></td>
                 <td>@item.EventId</td>
-                <td>@item.EventTimestamp</td>
+                <td>@item.EventTimestamp.ToServerLocalDisplay()</td>
                 <td>@item.EntityType</td>
                 <td>@item.EventType</td>
+                <td>@item.SchemaVersion</td>
                 <td>@item.ActorId</td>
-                <td>@item.EntityData</td>
+                <td>@item.ActorType</td>
+                <td>@item.CorrelationId</td>
+                <td class="entity-data">
+                    <pre>@item.EntityData</pre>
+                </td>
             </tr>
         }
     </tbody>
