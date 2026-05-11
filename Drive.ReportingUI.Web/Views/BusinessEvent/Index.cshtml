@@ -1,0 +1,27 @@
+﻿@using Drive.ReportingUI.Web.Data.Models
+@model IEnumerable<BusinessEvent>
+
+<h2>Business Events</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Event Date</th>
+            <th>Event Type</th>
+            <th>Actor Id</th>
+            <th>Entity Data </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.EventId</td>
+                <td>@item.EventTimestamp</td>
+                <td>@item.EventType</td>
+                <td>@item.ActorId</td>
+                <td>@item.EntityData</td>
+            </tr>
+        }
+    </tbody>
+</table>
