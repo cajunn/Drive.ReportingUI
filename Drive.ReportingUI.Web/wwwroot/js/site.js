@@ -47,7 +47,7 @@ $(function () {
                     searchable: true
                 },
                 {
-                    target: [3, 4, 7],
+                    target: [3, 4, 6, 7],
                     columnControl: ['order', ['searchList']]
                 },
                 {
@@ -90,4 +90,55 @@ function formatEntityData(entityData) {
     `;
 }
 
+let metadataTable;
 
+$(document).on('click', '.event-metadata-link', function (e) {
+    e.preventDefault();
+
+    const eventId = $(this).data('event-id');
+
+    $('#metadataModalLabel').text(`Metadata for Event ${eventId}`);
+
+    if (metadataTable) {
+        metadataTable.destroy();
+        $('#metadataTable tbody').empty();
+    }
+
+    metadataTable = $('#metadataTable').DataTable({
+        ajax: {
+            url: `/BusinessEvent/Metadata?eventId=${eventId}`,
+            dataSrc: ''
+        },
+        columns: [
+            { data: 'entityId' },
+            { data: 'entityType' },
+            { data: 'metadataKey' },
+            { data: 'metadataValue' },
+            { data: 'dataType' }
+        ],
+
+        paging: false,
+        searching: false, 
+        info: false,
+        lengthChange: false,
+        pageLength: 50,
+
+        initComplete: function (settings, json) {
+            const rowCount = json.leghth || 0;
+            const dialog = $('metadataModalDialog');
+
+            dialog.removeClass('modal-lg modal-xl modal-fullscreen');
+
+            if (rowCount > 20) {
+                dialog.addClass('modal-xl');
+            }
+
+            if (rowCount > 50) {
+                dialog.addClass('modal-fulscreen');
+            }
+        }
+    });
+
+    const modal = new bootstrap.Modal(document.getElementById('metadataModal'));
+    modal.show();
+});
