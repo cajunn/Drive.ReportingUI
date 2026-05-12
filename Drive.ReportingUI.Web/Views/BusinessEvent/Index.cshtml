@@ -23,7 +23,13 @@
         {
             <tr>
                 <td class="dt-control"></td>
-                <td>@item.EventId</td>
+                <td>
+                    <a href="#"
+                        class="event-metadata-link"
+                        data-event-id="@item.EventId">
+                        @item.EventId
+                    </a>
+                </td>
                 <td>@item.EventTimestamp.ToServerLocalDisplay()</td>
                 <td>@item.EntityType</td>
                 <td>@item.EventType</td>
@@ -38,3 +44,29 @@
         }
     </tbody>
 </table>
+
+<div class="modal fade" id="metadataModal" tabindex="-1" aria-labelledby="metadataModalLabel" aria-hidden="true">
+    <div id="metadataModalDialog" class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="metadataModalLabel">Business Event Metadata</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body metadata-modal-body">
+                <table id="metadataTable" class="display table table-striped w-100">
+                    <thead>
+                        <tr>
+                            <th>Entity Id</th>
+                            <th>Entity Type</th>
+                            <th>Metadata Key</th>
+                            <th>Metadata Value</th>
+                            <th>Data Type</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
