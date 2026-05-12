@@ -47,7 +47,7 @@ $(function () {
                     searchable: true
                 },
                 {
-                    target: [3, 4, 7],
+                    target: [3, 4, 6, 7],
                     columnControl: ['order', ['searchList']]
                 },
                 {
