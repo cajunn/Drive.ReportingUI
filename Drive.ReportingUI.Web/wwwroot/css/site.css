@@ -29,3 +29,25 @@ body {
 .form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
   text-align: start;
 }
+
+td.dt-control {
+    cursor: pointer;
+}
+
+    td.dt-control::before {
+        content: '+';
+        font-weight: bold;
+    }
+
+tr.shown td.dt-control::before {
+    content: '-';
+}
+
+.entity-data-details {
+    padding: 12px 16px;
+}
+
+    .entity-data-details pre {
+        white-space: pre-wrap;
+        margin: 0;
+    }
