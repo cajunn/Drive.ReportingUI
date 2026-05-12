@@ -15,7 +15,7 @@ $(function () {
     const table = $('#businessEventsTable'); 
 
     if (table.length) {
-        table.DataTable({
+        const dataTable = table.DataTable({
             pageLength: 25,
             order: [[1, 'desc']],
 
@@ -32,8 +32,12 @@ $(function () {
                     searchable: true
                 },
                 {
-                    target: [3, 4],
+                    target: [3, 4, 7],
                     columnControl: ['order', ['searchList']]
+                },
+                {
+                    target: [2],
+                    columnControl: ['order']
                 }
             ],
 
@@ -43,7 +47,7 @@ $(function () {
             }
         });
 
-        tableElement.on('click', 'td.dt-control', function () {
+        table.on('click', 'td.dt-control', function () {
             const tr = $(this).closest('tr');
             const row = dataTable.row(tr);
 
