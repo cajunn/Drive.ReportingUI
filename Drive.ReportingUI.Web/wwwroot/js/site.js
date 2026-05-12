@@ -17,7 +17,22 @@ $(function () {
     if (table.length) {
         const dataTable = table.DataTable({
             pageLength: 25,
-            order: [[1, 'desc']],
+            order: [[2, 'desc']],
+
+            layout: {
+                topStart: ['pageLength', {
+                    buttons: [
+                        {
+                            extend: 'csvHtml5',
+                            text: 'Export CSV',
+                            className: 'btn btn-primary btn-sm',
+                            filename: 'business_events_export',
+                        }
+                    ]
+                }],
+                topEnd: 'search',
+                bottomEnd: 'paging'
+            },
 
             columnDefs: [
                 {
