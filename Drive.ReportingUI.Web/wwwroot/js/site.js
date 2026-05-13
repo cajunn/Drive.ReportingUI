@@ -12,6 +12,47 @@
 
 
 $(function () {
+    $.fn.dataTable.ext.search.push(function (settings, data) {
+        if (settings.nTable.id !== 'businessEventsTable') {
+            return true;
+        }
+
+        const fromValue = $('#eventDateFrom').val();
+        const toValue = $('#eventDateTo').val();
+
+        if (!fromValue && !toValue) {
+            return true;
+        }
+
+        // Adjust this index if your Event Date column moved.
+        // Based on our last setup:
+        // 0 expand
+        // 1 EventId
+        // 2 Event Date
+        const eventDateColumnIndex = 2;
+
+        const eventDateText = data[eventDateColumnIndex];
+
+        if (!eventDateText) {
+            return false;
+        }
+
+        const eventDate = new Date(eventDateText);
+        const fromDate = fromValue ? new Date(fromValue + 'T00:00:00') : null;
+        const toDate = toValue ? new Date(toValue + 'T23:59:59') : null;
+
+        if (fromDate && eventDate < fromDate) {
+            return false;
+        }
+
+        if (toDate && eventDate > toDate) {
+            return false;
+        }
+
+        return true;
+    });
+
+
     const table = $('#businessEventsTable'); 
 
     if (table.length) {
@@ -24,9 +65,22 @@ $(function () {
                     buttons: [
                         {
                             extend: 'csvHtml5',
-                            text: 'Export CSV',
+                            text: 'Export All',
                             className: 'btn btn-primary btn-sm',
-                            filename: 'business_events_export',
+                            filename: 'business_events_export_all',
+                        }, 
+                        {
+                            extend: 'csvHtml5',
+                            text: 'Export Current Rows',
+                            className: 'btn btn-primary btn-sm',
+                            filename: 'business_events_export_current',
+                            exportOptions: {
+                                modifier: {
+                                    search: 'applied',
+                                    order: 'applied', 
+                                    page: 'current'
+                                }
+                            }
                         }
                     ]
                 }],
@@ -47,11 +101,11 @@ $(function () {
                     searchable: true
                 },
                 {
-                    target: [3, 4, 6, 7],
+                    targets: [3, 4, 6, 7],
                     columnControl: ['order', ['searchList']]
                 },
                 {
-                    target: [2],
+                    targets: [2],
                     columnControl: ['order']
                 }
             ],
@@ -60,6 +114,16 @@ $(function () {
                 indicators: false,
                 handler: false
             }
+        });
+
+        $('#eventDateFrom, #eventDateTo').on('change', function () {
+            dataTable.draw();
+        });
+
+        $('#clearEventDateFilter').on('click', function () {
+            $('#eventDateFrom').val('');
+            $('#eventDateTo').val('');
+            dataTable.draw();
         });
 
         table.on('click', 'td.dt-control', function () {

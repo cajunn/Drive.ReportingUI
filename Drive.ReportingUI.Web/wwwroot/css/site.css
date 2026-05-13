@@ -61,3 +61,13 @@ tr.shown td.dt-control::before {
     word-break: break-word;
     white-space: normal;
 }
+
+.dt-buttons{
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.dt-buttons .btn {
+    border-radius: 6px !important;
+}
